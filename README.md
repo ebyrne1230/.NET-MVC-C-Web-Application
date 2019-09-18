@@ -353,6 +353,7 @@ All together these actionlinks would provide the user easy access to the Dashboa
 Description: Have the schedule index display all schedules sorted by job, similar to the partial view.  Make sure there are working links to edit and delete each schedule item.  Each job does not require full details, just the job title and number need be visible.
 
 
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
 
@@ -362,6 +363,7 @@ Description: Have the schedule index display all schedules sorted by job, simila
 
 
 
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
 
