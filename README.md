@@ -343,6 +343,8 @@ Another example is at the bottom portion of the code for the Index.cshtml in the
 
 Note the actionlink.  It again will appear to the user as an underlined link in blue that if they clicked on it they would be routed to the Dashboard View page.
 
+All together these actionlinks would provide the user easy access to the Dashboard View page from anywhere within the site.
+
 
 
 
