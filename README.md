@@ -75,6 +75,85 @@ Provide before snippets and after snippets to show the gained resolution.
 The changes made were on the Schedule Index view page, the Schedule Details View page, and on the Schedule Delete View page.
 
 
+Inside the Views/Schedules Folder
+
+Index.cshtml
+
+```cshtml
+
+@model IEnumerable<ConstructionNew.Models.Schedule>
+
+@{
+    ViewBag.Title = "Schedules";
+}
+
+<h2>Employee Schedules</h2>
+
+<p>
+    @Html.ActionLink("Create New Schedule", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Person.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Job.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)            
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Person.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job.JobTitle)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.StartDate)*@ @*Made Modification to start and enddates in order to create uniformity for datetime across all views and dashboard*@
+            @{
+                string parameterValue = item.StartDate.ToString("MM-dd-yyyy");
+            }
+            @Html.DisplayFor(modelItem => parameterValue)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.EndDate)*@ 
+            @if (item.EndDate.HasValue)
+            {
+                @Convert.ToDateTime(item.EndDate).ToString("MM-dd-yyyy")
+            }
+        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ScheduleId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ScheduleId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ScheduleId })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ScheduleId })
+
+            </td>
+        }
+    </tr>
+
+}
+
+</table>
+
+```
+
 
 
 
