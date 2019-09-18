@@ -274,9 +274,74 @@ Note the original code that was commented out and the formatting changes inputte
 ```
 
 
+### ModifyDateDisplay
+
+The Story Description:  (Not the original) The idea was to review all pages accessible by all users.  To go through thoroughly and to 
+provide a way for all users in any view on the site to have the option to navigate directly back to the Dashboard view that opens once a user is logged into the program.
+
+
+Because of how tedious this assignment was I am chosing not to copy every page I made modifications to.  I am providing a couple of 
+snippets to give you a visual example of the code additions.
+
+This was focused on the front-end aspect to the application.  All modifications added were of action links using Razor and Html syntax.
+
+For example on the Schedule Index in the Views folder I added the following code:
+
+
+```cshtml
+
+@using System.Web.UI.WebControls
+@using ConstructionNew.Models
+@using ConstructionNew.Enums
+@using ConstructionNew.Extensions
+@using System.Collections.Generic
 
 
 
+@model IEnumerable<ConstructionNew.Models.Job>
+
+
+
+@{
+    ViewBag.Title = "Schedules";
+}
+
+<h5 style="text-align:right">
+    @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")
+</h5>
+
+```
+
+This tag would appear on the page on the upper right side and if the user clicked the link they would be rerouted to the Dashboard page.
+
+
+
+Another example is at the bottom portion of the code for the Index.cshtml in the Jobs/View folder I added this tag:
+
+```cshtml
+
+        else
+        {
+            <td>
+               
+                @Html.ActionLink("Details", "Details", new { id = item.JobId })
+               
+            </td>    
+        }
+
+        
+    </tr>
+        }
+    }
+
+
+</table>
+<p>
+    @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")
+</p>
+```
+
+Note the actionlink.  It again will appear to the user as an underlined link in blue that if they clicked on it they would be routed to the Dashboard View page.
 
 
 
