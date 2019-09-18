@@ -23,12 +23,6 @@ Below are descriptions of stories I helped work on in an AGILE environment along
 * [Back2DashboardLinks](#back2dashboardlinks)
 
 
-## Back End Stories
-* [ModifyScheduleIndex](#modifyscheduleindex)
-* [AddForemanFromJobView](#addforemanfromjobview)
-
-
-
 ### ModifyDateDisplay
 
 The Story Description:  The schedule start and end dates are currently set to the display mode of yyyy-mm-dd.  This MUST REMAIN the same
@@ -349,10 +343,22 @@ All together these actionlinks would provide the user easy access to the Dashboa
 *Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
+## Back End Stories
+* [ModifyScheduleIndex](#modifyscheduleindex)
+* [AddForemanFromJobView](#addforemanfromjobview)
+
+
+### ModifyScheduleIndex
+
+Description: Have the schedule index display all schedules sorted by job, similar to the partial view.  Make sure there are working links to edit and delete each schedule item.  Each job does not require full details, just the job title and number need be visible.
 
 
 
 
+
+
+
+### AddForemanFromJobView
 
 
 
