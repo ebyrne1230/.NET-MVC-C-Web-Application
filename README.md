@@ -39,3 +39,92 @@ Provide before snippets and after snippets to show the gained resolution.
 The changes made were on the Schedule Index view page, the Schedule Details View page, and on the Schedule Delete View page.
 
 
+
+# Live Project
+
+## Introduction
+
+I took part in a non-paid internship with Prosper IT Consulting working as a software developer as part of a Dev Ops team that worked on building a web application that would perform as an intranet for a Portland based construction company called Erectors, Inc.
+
+This project leveraged the power of .NET frameworks and MVC.  The main programming language used was C# in addition to the front-end languages.
+
+Below are descriptions of stories I helped work on in an AGILE environment along with code snippets and navigation links.  
+
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills)*
+
+## Front End Stories
+* [ModifyDateDisplay](#modify-date-display)
+* [Back2DashboardLinks](#back-2-dashboard-links)
+
+
+## Back End Stories
+* [ModifyScheduleIndex](#modify-schedule-index)
+* [AddForemanFromJobView](#add-foreman-from-job-view)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
