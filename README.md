@@ -364,156 +364,76 @@ Note the code before:
 
 ```cshtml
 
-@using System.Web.UI.WebControls
-@using ConstructionNew.Models
-@using ConstructionNew.Enums
-@using ConstructionNew.Extensions
-@using System.Collections.Generic
-
-
-
-@model IEnumerable<ConstructionNew.Models.Job>
-
-
+@model IEnumerable<ConstructionNew.Models.Schedule>
 
 @{
     ViewBag.Title = "Schedules";
 }
 
-<h5 style="text-align:right">
-    @Html.ActionLink("Back to Dashboard", "Index", "Dashboard")
-</h5>
+<h2>Employee Schedules</h2>
 
-@*//Main Schedule Index Page Template for View  Option 1*@
-<div class="container-fluid"
-<div class="row ">
-    <div class="panel-group top-buffer col-lg-9" id="accordion" role="tablist" aria-multiselectable="true" style="width:100%">
-        <div class="panel panel-default ">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h2 class="panel-title">
-                    Employee Schedules
-                    @if (User.IsInRole("Admin"))
-                    {
+<p>
+    @Html.ActionLink("Create New Schedule", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Person.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Job.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)            
+        </th>
+        <th></th>
+    </tr>
 
-                        @Html.ActionLink("Create New", "Create", "Schedules", null, new { @class = "createNew" })
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Person.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job.JobTitle)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.StartDate)*@ @*Made Modification to start and enddates in order to create uniformity for datetime across all views and dashboard*@
+            @{
+                string parameterValue = item.StartDate.ToString("MM-dd-yyyy");
+            }
+            @Html.DisplayFor(modelItem => parameterValue)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.EndDate)*@ 
+            @if (item.EndDate.HasValue)
+            {
+                @Convert.ToDateTime(item.EndDate).ToString("MM-dd-yyyy")
+            }
+        </td>
+        @if (User.IsInRole("Admin"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ScheduleId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ScheduleId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ScheduleId })
+            </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ScheduleId })
 
-                    }
-                </h2>
+            </td>
+        }
+    </tr>
 
-            </div>
-            <br />
-            
-            <div class="container">
-                @foreach (Job job in Model)
-                {
-                    
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <table style="width:100%">
-                                <tr>
-                                    <td style="width:40px">
-                                        <span class="label label-success">@job.JobNumber</span>
-                                    </td>
-                                    <td>
-                                        <span style="font-weight:bold">@job.JobTitle</span>
-                                        <br />@job.StreetAddress @job.City, @job.State
-                                    </td>
-                                    @*<td>
-                                    <span>Start Time: @schedule.Job.ShiftTimes</span>
-                                </td>*@
-                                    @*<td>*@
-                                    @*If there is a note, Display it*@
-                                    @*@if (!String.IsNullOrEmpty(schedule.Job.Note))*@
-                                    @*{
-                                        <span>Note: @schedule.Job.Note</span>
-                                    }
-                                </td>*@
-                                    <td style="text-align:right">
-                                        <span>
-                                            <i class="glyphicon glyphicon-info-sign"></i>
-                                            @*Action Link to Job Details*@
-                                            @Html.ActionLink("Details", "Details", "Jobs", new { id = job.JobId }, null)
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div> 
+}
 
-                        <div class="panel-body">
-                            <table style="width:100%">
-                                <tr>
-                                    <th>Name</th>
-                                    @*<th></th>  
-                                    <th></th>*@  @*These stayed in for allignment purposes*@
-                                    <th><i class="glyphicon glyphicon-calendar"> </i> Start Date</th>
-                                    <th><i class="glyphicon glyphicon-calendar"> </i> End Date</th>
-                                </tr>
-                                @*<br />*@ @*//Optional break to add more space if you think is necessary*@
-                                <br />
-
-                                @foreach (Job jobs in Model)
-                                {
-
-                                    foreach (var j in jobs.Schedules)
-
-                                    {
-
-                                        if (j.Job.JobNumber == job.JobNumber)
-                                        {
-                                            <tr style="border-bottom: 1px solid #ddd">
-                                                <td style="width:20%">
-                                                    @j.Person.FName @j.Person.LName
-                                                </td>
-
-                                                <td style="width:20%">
-                                                    @j.StartDate.ToString("MM-dd-yyyy")
-                                                </td>
-                                                <td style="width:20%">
-                                                    @if (j.EndDate.HasValue)
-                                                    {
-                                                        @Convert.ToDateTime(j.EndDate).ToString("MM-dd-yyyy")
-                                                    }
-                                                </td>
-
-                                                <td>
-                                                    <span>
-                                                        <i class="glyphicon glyphicon-info-sign"></i>
-                                                        @*Action Link to Job Details*@
-                                                        @Html.ActionLink("Details", "Details", "Schedules", new { id = j.ScheduleId }, null)
-                                                    </span>
-                                                </td>
-
-                                                @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-                                                {
-                                                    <td style="text-align:right">
-                                                        <a href="@Url.Action("Edit", "Schedules", new { id = j.ScheduleId }, null)">
-                                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                                        </a>
-                                                    </td>
-                                                }
-
-                                                @*@if (User.IsInRole("Employee"))
-                                                {
-                                                    <td style="text-align:right">
-                                                        <a href="@Url.Action("Details", "Schedules", new { id = j.ScheduleId }, null)">
-                                                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                                        </a>
-                                                    </td>
-                                                }*@
-                                            </tr>
-                                        }
-                                    }
-                                 }
-                            </table>
-                        </div>                        
-                    </div>              
-                 }                
-            </div>
-            <br />
-        </div>
-    </div>
-</div>
-</div>
+</table>
 
 ```
 
