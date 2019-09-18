@@ -6,40 +6,6 @@ As a team we built a company Intranet Web Application using C# leveraging the po
 This project included end to end work.
 
 
-Notes
-
-For my C# Live Projects there were 2 different projects I was able to do work on.
-
-The first sprint was for the file ConstructionNew.sin (I housed it C:\Users\Student\source\repos\ebyrne1230\TechAcademyCSharpLiveProject)
-
-I was able to work on and complete 4 stories
-
-Titles:
-
-EB-4480-ModifyDateDisplay
-
-EB-4481-Back2DashboardLinks
-
-EB-4488-ModifyScheduleIndex
-
-EB-AddForemanFromJobView
-
-
-Organzing By Story
-
-ModifyDateDisplay
-
-The Story Description:  The schedule start and end dates are currently set to the display mode of yyyy-mm-dd.  This MUST REMAIN the same
-so the editors for those dates can get the current value.  Use formatting statements to change the way these dates show up in the various schedule views (ie the dashboard and the index list)  Hint: This most likely needs to be done in the cshtml, but if you can get it to work on the controller side, that would be epic!
-
-So initially for the schedule views, the webpage would display with the yyyy-mm-dd format for each scheduled job.  I was tasked with the challenge to go through the code in the various view pages and adjust the current formatting statements to render the wanted result.
-
-Provide before snippets and after snippets to show the gained resolution.
-
-The changes made were on the Schedule Index view page, the Schedule Details View page, and on the Schedule Delete View page.
-
-
-
 # Live Project
 
 ## Introduction
@@ -75,7 +41,7 @@ Provide before snippets and after snippets to show the gained resolution.
 The changes made were on the Schedule Index view page, the Schedule Details View page, and on the Schedule Delete View page.
 
 
-Inside the Views/Schedules Folder
+Inside the Views/Schedules Folder I added formatting statements to each of these documents:
 
 Index.cshtml
 
@@ -231,6 +197,83 @@ else
 }
 
 ```
+
+Modifications were also made to:
+
+Delete.cshtml (Schedule Delete View Page)
+
+
+```cshtml
+
+@model ConstructionNew.Models.Schedule
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Schedules</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4></h4>
+    <hr />
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Job.JobTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Job.JobTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>           
+            @*@Html.DisplayFor(model => model.StartDate)*@ @*This was the original code.  Made modification to StartDate display for uniformity.*@
+            @{
+                string parameterValueA = Model.StartDate.ToString("MM-dd-yyyy");
+            }
+            @Html.DisplayFor(Model => parameterValueA)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.EndDate)*@ @*This was the original code.  Made modification to StartDate display for uniformity.*@
+
+            @if (Model.EndDate.HasValue)
+            {
+                @Convert.ToDateTime(Model.EndDate).ToString("MM-dd-yyyy")
+            }
+
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+
+```
+
+
 
 
 
