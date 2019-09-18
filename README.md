@@ -36,10 +36,7 @@ so the editors for those dates can get the current value.  Use formatting statem
 
 So initially for the schedule views, the webpage would display with the yyyy-mm-dd format for each scheduled job.  I was tasked with the challenge to go through the code in the various view pages and adjust the current formatting statements to render the wanted result.
 
-Provide before snippets and after snippets to show the gained resolution.
-
-The changes made were on the Schedule Index view page, the Schedule Details View page, and on the Schedule Delete View page.
-
+My resolution for this was mostly front-end focused, residing within the schedule views.  I chose not to alter the controller this time.
 
 Inside the Views/Schedules Folder I added formatting statements to each of these documents:
 
