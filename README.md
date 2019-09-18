@@ -274,7 +274,7 @@ Note the original code that was commented out and the formatting changes inputte
 ```
 
 
-### ModifyDateDisplay
+### Back2DashBoardLinks
 
 The Story Description:  (Not the original) The idea was to review all pages accessible by all users.  To go through thoroughly and to 
 provide a way for all users in any view on the site to have the option to navigate directly back to the Dashboard view that opens once a user is logged into the program.
