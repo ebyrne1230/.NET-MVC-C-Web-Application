@@ -273,6 +273,7 @@ Note the original code that was commented out and the formatting changes inputte
 
 ```
 
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 ### Back2DashBoardLinks
 
@@ -345,7 +346,7 @@ Note the actionlink.  It again will appear to the user as an underlined link in 
 
 All together these actionlinks would provide the user easy access to the Dashboard View page from anywhere within the site.
 
-
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
 
