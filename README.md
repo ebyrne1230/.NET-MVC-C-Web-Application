@@ -43,7 +43,8 @@ The changes made were on the Schedule Index view page, the Schedule Details View
 
 Inside the Views/Schedules Folder I added formatting statements to each of these documents:
 
-Index.cshtml
+Index.cshtml (returns the view for the schedule to the user)
+Note the original code that was commented out and the formatting changes inputted directly below.
 
 ```cshtml
 
@@ -122,7 +123,8 @@ Index.cshtml
 
 Made additional modifications to:
 
-Details.cshtml
+Details.cshtml (returns the details view to the user)
+Note the original code that was commented out and the formatting changes inputted directly below.
 
 ```cshtml
 
@@ -200,7 +202,8 @@ else
 
 Modifications were also made to:
 
-Delete.cshtml (Schedule Delete View Page)
+Delete.cshtml (returns the delete view for the schedules to the user)
+Note the original code that was commented out and the formatting changes inputted directly below.
 
 
 ```cshtml
