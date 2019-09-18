@@ -19,13 +19,13 @@ Below are descriptions of stories I helped work on in an AGILE environment along
 *Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills)*
 
 ## Front End Stories
-* [ModifyDateDisplay](#modify-date-display)
-* [Back2DashboardLinks](#back-2-dashboard-links)
+* [ModifyDateDisplay](#modifydatedisplay)
+* [Back2DashboardLinks](#back2dashboardlinks)
 
 
 ## Back End Stories
-* [ModifyScheduleIndex](#modify-schedule-index)
-* [AddForemanFromJobView](#add-foreman-from-job-view)
+* [ModifyScheduleIndex](#modifyscheduleindex)
+* [AddForemanFromJobView](#addforemanfromjobview)
 
 
 
