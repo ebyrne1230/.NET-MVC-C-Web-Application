@@ -11,9 +11,9 @@ Testing the relative link concept
 
 [Test Image 1 full size](BeforeAndAfter4GitHub/test_1.JPG)
 
-[Test Image 2 small size](BeforeAndAfter4GitHub/test_2_med.JPG)
+[Test Image 2 medium size](BeforeAndAfter4GitHub/test_2_med.JPG)
 
-[Test Image 3 medium size](BeforeAndAfter4GitHub/test_3_small.JPG)
+[Test Image 3 small size](BeforeAndAfter4GitHub/test_3_small.JPG)
 
 
 # Live Project
