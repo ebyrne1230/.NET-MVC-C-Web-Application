@@ -8,9 +8,12 @@ This project included end to end work.
 Testing the relative link concept
 
 [Before and After images of this story](BeforeAndAfter4GitHub/IMG_4245.JPG)
-[Test Image 1 (full size)](BeforeAndAfter4GitHub/2010 062(resized).JPG)
-[Test Image 2 (full size)](BeforeAndAfter4GitHub/2010 062(small).JPG)
-[Test Image 3 (full size)](BeforeAndAfter4GitHub/2010 062.JPG)
+
+[Test Image 1 full size](BeforeAndAfter4GitHub/2010 062(resized).JPG)
+
+[Test Image 2 small size](BeforeAndAfter4GitHub/2010 062(small).JPG)
+
+[Test Image 3 medium size](BeforeAndAfter4GitHub/2010 062.JPG)
 
 
 # Live Project
