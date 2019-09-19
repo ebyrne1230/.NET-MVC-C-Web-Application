@@ -1558,7 +1558,16 @@ new job assignment.
 *Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
+### Other Skills
 
+* Teaming with a group of developers working to identify both front-end and back-end issues/bugs and finding solutions to improve usability and efficieny in an application.
+* Attending stand-up meetings physically and remotely, discussing any questions or concerns with team members to improve overall organization and communication.
+* Practice with Team/Pair Programming when a developer has issues solving a particular problem.
+
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
+
+
+Thanks for viewing :)
 
 
 
