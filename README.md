@@ -16,7 +16,7 @@ This project leveraged the power of .NET frameworks and MVC.  The main programmi
 
 Below are descriptions of stories I helped work on in an AGILE environment along with code snippets and navigation links.  
 
-*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills)*
+*Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 ## Front End Stories
 * [ModifyDateDisplay](#modifydatedisplay)
@@ -1076,7 +1076,484 @@ This would ultimately lead to rendering a page for the user that looked very sim
 
 ### AddForemanFromJobView
 
+Description:
+With the expectation that the available foremen will be consistent throughout the development of the project, add an optional form 
+to the create job view that allows the user to select a foreman and add dates.  A drop-down selector should include the list of foremen.  Hint: You may wish to use a partial view for this form to make the models easier.
 
+So the current create job view had a form that asked the user to select and/or enter: Job Title, Job#, UserName, Start and End Dates.
+
+I was to add a secondary form on the same page that would allow for the selection of a foreman to add to the job.
+
+The solution to this story was split between work done on the backend with modifications made to the JobsController and work on the 
+frontend which included the creation of a partial view page that would work off of another view page but in doing so allow for the rendering of the information we wanted to be seen for the forms to be functional.
+
+
+Before any code modifications have been made the JobsConstroller.cs file looked like this:
+
+```csharp
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using ConstructionNew.Models;
+
+namespace ConstructionNew.Controllers
+{
+    public class JobsController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Jobs
+        [Authorize] //used to restrict view of unregistered users
+        public ActionResult Index()
+        {
+            return View(db.Jobs.ToList());
+        }
+
+        // GET: Jobs/Details/5
+        [Authorize] //used to restrict view of unregistered users
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        // GET: Jobs/Create
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Jobs/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create([Bind(Include = "JobId,JobTitle,JobNumber,ShiftTimes,StreetAddress,City,State,Zipcode,Note")] Job job)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.Jobs.Any(j => j.JobTitle.Equals(job.JobTitle)))
+                {
+                    ModelState.AddModelError("JobTitle", "This job title is currently being used, please change the title," +
+                                             " or delete/modify the job titled " + "\""+ job.JobTitle + "\".");
+                    return View(job);
+                }
+                if (db.Jobs.Any(j => j.JobNumber.Equals(job.JobNumber)))
+                {
+                    ModelState.AddModelError("JobNumber", "This job number is currently being used, please change the number," +
+                                             " or delete/modify the job numbered " + "\"" + job.JobNumber + "\".");
+                    return View(job);
+                }
+                else
+                {
+                    job.JobId = Guid.NewGuid();
+                    db.Jobs.Add(job);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(job);
+        }
+
+        // GET: Jobs/Edit/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        // POST: Jobs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "JobId,JobTitle,JobNumber,ShiftTimes,StreetAddress,City,State,Zipcode,Note")] Job job)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(job).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(job);
+        }
+
+        // GET: Jobs/Delete/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        // POST: Jobs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            Job job = db.Jobs.Find(id);
+            db.Jobs.Remove(job);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+    }
+}
+
+
+```
+
+I've included a snippet of the changes made to the JobsController to allow for new data to be bound and posted to the database
+including foreman assignment, also for the creation of a partialview which will eventually be visible as a secondary form to the user.
+
+After:
+
+```csharp
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+using ConstructionNew.Models;
+
+namespace ConstructionNew.Controllers
+{
+    public class JobsController : Controller
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: Jobs
+        [Authorize] //used to restrict view of unregistered users
+        public ActionResult Index()
+        {
+
+            return View(db.Jobs.OrderBy(i => i.JobNumber).ToList());
+        }
+
+        // GET: Jobs/Details/5
+        [Authorize] //used to restrict view of unregistered users
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+
+            var jobDetailsVM = new JobDetailsViewModel
+            {
+                JobId = job.JobId,
+                JobTitle = job.JobTitle,
+                JobNumber = job.JobNumber,
+                StreetAddress = job.StreetAddress,
+                City = job.City,
+                State = job.State,
+                Zipcode = job.Zipcode,
+                Note = job.Note,
+                ShiftTimes = job.ShiftTimes,
+                ForemanName = "None Assigned",
+                Phone = "",
+                
+            };
+            //Get foreman data
+            var query = (from a in db.Users
+                         join b in db.Schedules on a.Id equals b.Person.Id
+                         where a.WorkType == Enums.WorkType.Foreman && b.Job.JobNumber == job.JobNumber
+                         select new
+                         {
+                             a.FName,
+                             a.LName,
+                             a.PhoneNumber
+                         }).FirstOrDefault();
+            //Add foreman data to VM if a result was found
+            if (query != null)
+            {
+                jobDetailsVM.ForemanName = query.FName + " " + query.LName;
+                jobDetailsVM.Phone = query.PhoneNumber;
+            }
+
+            return View(jobDetailsVM);
+        }
+
+
+
+        // GET: Jobs/Create
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create()
+        {
+            // Obtain data for drowpdown lists            
+            ViewBag.foremen = GetForemen();
+            return View();
+        }
+
+        // POST: Jobs/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Create([Bind(Include = "JobId,JobTitle,JobNumber,ShiftTimes,StreetAddress,City,State,Zipcode,Note")] Job job, [Bind(Include ="Person, StartDate,EndDate")] Schedule schedule, String Foremen)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.Jobs.Any(j => j.JobTitle.Equals(job.JobTitle)))
+                {
+                    ModelState.AddModelError("JobTitle", "This job title is currently being used, please change the title," +
+                                             " or delete/modify the job titled " + "\"" + job.JobTitle + "\".");
+                    return View(job);
+                }
+                if (db.Jobs.Any(j => j.JobNumber.Equals(job.JobNumber)))
+                {
+                    ModelState.AddModelError("JobNumber", "This job number is currently being used, please change the number," +
+                                             " or delete/modify the job numbered " + "\"" + job.JobNumber + "\".");
+                    return View(job);
+                }
+                else
+                {
+                    job.JobId = Guid.NewGuid();
+                    db.Jobs.Add(job);
+                    db.SaveChanges();
+                    if (schedule != null)
+                    {
+                        ApplicationUser foreman = db.Users.Where(f => f.Id == Foremen).FirstOrDefault();
+                        schedule.Job = db.Jobs.Where(j => j.JobId == job.JobId).FirstOrDefault();
+                        schedule.Person = foreman;
+                        schedule.ScheduleId = Guid.NewGuid();
+                        db.Schedules.Add(schedule);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
+            }            
+            return View(job);
+        }
+
+        // GET: Jobs/Edit/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+           
+            return View(job);
+        }
+
+        // POST: Jobs/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "JobId,JobTitle,JobNumber,ShiftTimes,StreetAddress,City,State,Zipcode,Note")] Job job)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(job).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(job);
+        }
+
+        // GET: Jobs/Delete/5
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Job job = db.Jobs.Find(id);
+            if (job == null)
+            {
+                return HttpNotFound();
+            }
+            return View(job);
+        }
+
+        // POST: Jobs/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            Job job = db.Jobs.Find(id);
+            db.Jobs.Remove(job);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        private IEnumerable<SelectListItem> GetForemen(string selectedForemanId = null)  // Added selectedForemenId that is set to null to be passed in when a default field value is needed
+        {
+            // Create a list of Foreman to pass to the viewbag foreman
+            // The DropDownList will display the Foremen list and
+            // The POST data receives the corresponding ForemenId
+
+            return db.Users.Where(f => f.WorkType == Enums.WorkType.Foreman).OrderBy(g => g.UserName).Select(h => new SelectListItem()
+            {
+                Value = h.Id,
+                Text = h.FName + " " + h.LName,
+                Selected = selectedForemanId == h.Id // Add Select variable that holds the Id of the current selected item that gets passed when the corresponding edit button is clicked
+            });
+        }
+
+
+        public ActionResult CreateJobsPartialView()
+        {
+            ViewBag.foremen = GetForemen();
+
+            return PartialView("CreateJobsPartialView");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }  
+       
+    
+
+    }
+}
+
+
+
+```
+
+At this point I would need to create a createjobspartialview for the Views/Jobs folder. This would eventually allow for the user to see the form to select a foreman.
+
+```cshtml
+@using System.Web.UI.WebControls
+@using ConstructionNew.Models
+@using ConstructionNew.Enums
+@using ConstructionNew.Extensions
+@using System.Collections.Generic
+
+
+
+
+
+
+@model ConstructionNew.Models.Schedule
+
+
+
+@{
+    
+
+    ViewBag.Title = "Foremen";
+}
+
+@using (Html.BeginForm())
+{
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        <h4>Job Foreman Assignment</h4>
+        <hr />
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Person.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Foremen", ViewBag.foremen as SelectList, "--Select Foreman--", new { style = "height:40px; width:450px;" })
+
+                @*@Html.ValidationMessageFor(model => model.Person.Id, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        <div class="form-group">
+                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", style = "height:40px; width:450px;" } })
+                    @*@Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })*@
+                </div>
+        </div>
+        
+        <div class="form-group">
+                @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", style = "height:40px; width:450px;" } })
+                    @*@Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })*@
+                </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+```
+
+I didn't include the snippet but this would be passed through the Jobs Create View page by action link that allowed for the user
+to see an additional form that appears to be part of the same page which would allow for foreman selection and be bound to each 
+new job assignment.
 
 *Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
