@@ -15,6 +15,9 @@ Testing the relative link concept
 
 [Test Image 3 small size](BeforeAndAfter4GitHub/test_3_small.JPG)
 
+https://github.com/ebyrne1230/.NET-MVC-C-Web-Application/blob/master/BeforeAndAfter4GitHub/test_3_small.JPG
+
+
 
 # Live Project
 
