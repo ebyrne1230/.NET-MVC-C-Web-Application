@@ -9,11 +9,11 @@ Testing the relative link concept
 
 [Before and After images of this story](BeforeAndAfter4GitHub/IMG_4245.JPG)
 
-[Test Image 1 full size](BeforeAndAfter4GitHub/2010 062(resized).JPG)
+[Test Image 1 full size](BeforeAndAfter4GitHub/test_1.JPG)
 
-[Test Image 2 small size](BeforeAndAfter4GitHub/2010062(small).JPG)
+[Test Image 2 small size](BeforeAndAfter4GitHub/test_2_med.JPG)
 
-[Test Image 3 medium size](BeforeAndAfter4GitHub/2010062.JPG)
+[Test Image 3 medium size](BeforeAndAfter4GitHub/test_3_small.JPG)
 
 
 # Live Project
