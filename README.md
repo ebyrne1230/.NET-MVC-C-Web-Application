@@ -7,7 +7,7 @@ This project included end to end work.
 
 Testing the relative link concept
 
-[Before and After images of this story] (BeforeAndAfter4GitHub/IMG_4245.JPG)
+[Before and After images of this story](BeforeAndAfter4GitHub/IMG_4245.JPG)
 
 
 # Live Project
