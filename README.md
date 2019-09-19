@@ -5,6 +5,10 @@ This is the placeholder for live project work done for a Portland Based company 
 As a team we built a company Intranet Web Application using C# leveraging the power of .NET frameworks with MVC.
 This project included end to end work.
 
+Testing the relative link concept
+
+[Before and After images of this story] (BeforeAndAfter4GitHub/IMG_4245.JPG)
+
 
 # Live Project
 
