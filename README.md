@@ -9,7 +9,7 @@ Testing the relative link concept
 
 [Before and After images of this story](BeforeAndAfter4GitHub/IMG_4245.JPG)
 
-[Test Image 1 full size](BeforeAndAfter4GitHub/2010062(resized).JPG)
+[Test Image 1 full size](BeforeAndAfter4GitHub/2010 062(resized).JPG)
 
 [Test Image 2 small size](BeforeAndAfter4GitHub/2010062(small).JPG)
 
