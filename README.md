@@ -1561,6 +1561,7 @@ new job assignment.
 *Jump to: [Front End Stories](#front-end-stories), [Back End Stories](#back-end-stories), [Other Skills](#other-skills), [Page Top](#live-project)*
 
 
+This is under construction and will have revisions in the future.
 Thanks for viewing :)
 
 
