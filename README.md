@@ -1,23 +1,4 @@
 # .NET-MVC-C-Web-Application
-Work done with Prosper IT Consulting Dev Ops Team
-
-This is the placeholder for live project work done for a Portland Based company called Erectors, Inc.
-As a team we built a company Intranet Web Application using C# leveraging the power of .NET frameworks with MVC.
-This project included end to end work.
-
-Testing the relative link concept
-
-[Before and After images of this story](BeforeAndAfter4GitHub/IMG_4245.JPG)
-
-[Test Image 1 full size](BeforeAndAfter4GitHub/test_1.JPG)
-
-[Test Image 2 medium size](BeforeAndAfter4GitHub/test_2_med.JPG)
-
-[Test Image 3 small size](BeforeAndAfter4GitHub/test_3_small.JPG)
-
-https://github.com/ebyrne1230/.NET-MVC-C-Web-Application/blob/master/BeforeAndAfter4GitHub/test_3_small.JPG
-
-
 
 # Live Project
 
